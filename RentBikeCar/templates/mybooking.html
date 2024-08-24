@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .booking-card {
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .bike-image {
+            width: 200px;
+            height: 200px;
+            margin-right: 20px;
+            margin-top:20px;
+        }
+        .bike-details {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-4">
+        <h1 class="text-center">My Bookings</h1>
+
+        {% for booking in bookis %}
+        <div class="booking-card d-flex">
+            <img src="{{ booking.bike.image.url }}" alt="Bike Image" class="bike-image">
+            <div class="bike-details">
+                <h3>{{ booking.bike.name }}</h3>
+                <p><strong>Bike Type:</strong> {{ booking.bike.get_category_display }}</p>
+                <p><strong>Location:</strong> {{ booking.bike.location }}</p>
+                <p><strong>Start Time:</strong> {{ booking.start_time }}</p>
+                <p><strong>End Time:</strong> {{ booking.end_time }}</p>
+                <p><strong>Total Cost:</strong> &#8377; {{ booking.total_cost }}</p>
+                <a href="{% url 'create_review' booking.bike.bike_id %}" class="btn btn-primary">Add Review</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if not bookis %}
+        <p class="text-center">You have no bookings.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

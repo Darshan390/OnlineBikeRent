@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-nav .nav-item .nav-link {
+            color: white;
+            padding: 1rem;
+        }
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #ffcc00;
+        }
+        .header {
+            background: url('/media/gallery/back.jpg') no-repeat center center;
+            background-size: cover;
+            opacity: 0.9;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+        }
+        .header::after {
+            content: "";
+            background: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.5rem;
+        }
+        .btn-enquire {
+            background-color: #ffcc00;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+        }
+        .btn-enquire:hover {
+            background-color: #e6b800;
+            color: white;
+        }
+        .top-bar {
+            background-color: black;
+            color: white;
+            padding: 10px 0;
+            font-size: 0.9rem;
+        }
+        .top-bar a {
+            color: white;
+            margin: 0 10px;
+        }
+        .bike-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
+          
+          .card-img-container {
+            position: relative;
+            padding: 10px;
+            text-align: center;
+            background: #f8f8f8;
+          }
+          
+          .card-img-top {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+          }
+          
+          .location {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+          }
+          
+          .card-body {
+            padding: 15px;
+          }
+          
+          .card-title {
+            font-size: 18px;
+            font-weight: 600;
+          }
+          
+          .card-text {
+            font-size: 14px;
+            color: #555;
+          }
+          
+          .price {
+            font-size: 16px;
+            font-weight: 700;
+            color: #27ae60;
+          }
+          
+          .original-price {
+            text-decoration: line-through;
+            font-weight: 400;
+            color: #999;
+            margin-left: 5px;
+          }
+          
+          .highlight {
+            font-size: 14px;
+            color: #555;
+          }
+          
+          .availability {
+            color: #27ae60;
+          }
+          
+          .unavailable {
+            color: #e74c3c;
+          }
+          
+          .btn-primary {
+            background-color: #007bff;
+            border: none;
+            font-size: 14px;
+          }
+          
+          .original-image-icon {
+            width: 20px;
+            height: 20px;
+          }
+          
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="/media/gallery/back.jpg" alt="Vision Bikes" style="height: 40px; border-radius: 20px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index'%}">Home</a>
+                </li>
+
+                <li class="nav-item dropdown">
+
+                        <div class="dropdown">
+                          <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Rent by Categories
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'rentbycategory' 'standard' %}">Standard</a>
+                            <a class="dropdown-item" href="{% url 'rentbycategory' 'sports' %}">Sports</a>
+                            <a class="dropdown-item" href="{% url 'rentbycategory' 'scooters' %}">Scooters</a>
+                            <a class="dropdown-item" href="{% url 'rentbycategory' 'cruiser' %}">Cruiser</a>
+                            <a class="dropdown-item" href="{% url 'rentbycategory' 'touring' %}">Touring</a>
+                        </div>
+                      
+                      </div>
+                      {% if request.user.is_authenticated %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'mybooking' %}">My Booking</a>
+                    </li>
+                    {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'more' %}">Manage Bikes</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Welcome, {{ user.username }}
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="profile">Profile</a>
+                      <a class="dropdown-item" href="settings">Settings</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="logout">Logout</a>
+                  </div>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="/login">Log In</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/Register">Sign Up</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+    </nav>
+
+
+    <header class="header">
+        
+        <div class="header-content">
+            
+            <h1>Explore Our Categories</h1>
+            <p>Find the perfect bike for your needs</p>
+            <button class="btn btn-enquire">{{ selected_category }}</button>
+        </div>
+    </header>
+
+    <div class="container mt-3">
+        <div class="row">
+          {% for b in bikes %}
+          {% if forloop.counter < 7 %}
+          <div class="col-md-4">
+            <div class="card bike-card mb-3">
+              <div class="card-img-container">
+                <img src="{{ b.image.url }}" class="card-img-top" alt="{{ b.name }}">
+              </div>
+              <div class="location">{{ b.location }}</div>
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 class="card-title">{{ b.name }}</h5>
+                    <p class="card-text"><small class="text-muted">{{ b.year }}</small></p>
+                  </div>
+                </div>
+                <p class="card-text">{{ b.location_details }}</p>
+                <p class="price">Rs{{ b.hourly_rate }} <span class="original-price">Rs{{ b.original_rate }}</span></p>
+                <p class="card-text">Deposit Rs{{ b.deposit }}</p>
+                <p class="highlight">Description: {{ b.bike_type.description }}</p>
+                <p class="highlight">Bike Type: {{ b.bike_type.name }} Type</p>
+                <p class="{% if bikes.0.is_available %}availability{% else %}unavailable{% endif %}">
+                  {% if bikes.0.is_available %}Available{% else %}Unavailable{% endif %}
+                </p>
+                <a href="{% url 'vehicledetails' b.bike_id %}" class="btn btn-primary rounded-0 pt-3 py-2 px-4">Book Now</a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

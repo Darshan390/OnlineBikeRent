@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if bike_type %}Edit Bike Type{% else %}Create Bike Type{% endif %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">{% if bike_type %}Edit Bike Type{% else %}Create Bike Type{% endif %}</h1>
+        <form method="post" class="border p-4 bg-light">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{% if bike_type %}{{ bike_type.name }}{% endif %}" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="4" required>{% if bike_type %}{{ bike_type.description }}{% endif %}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        <a href="{% url 'bike_type_list' %}" class="btn btn-secondary mt-3">Back to list</a>
+    </div>
+</body>
+</html>

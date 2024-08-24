@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bike Types</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Bike Types</h1>
+        <a href="{% url 'bike_type_create' %}" class="btn btn-primary mb-3">Add New Bike Type</a>
+        <ul class="list-group">
+            {% for bike_type in data %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="{% url 'bike_type_detail' rid=bike_type.id %}" class="font-weight-bold">{{ bike_type.name }}</a>
+                    </div>
+                    <div>
+                        <a href="{% url 'bike_type_update' rid=bike_type.id %}" class="btn btn-secondary btn-sm mr-2">Edit</a>
+                        <a href="{% url 'bike_type_delete' rid=bike_type.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

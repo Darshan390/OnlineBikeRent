@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ bike.name }}</title>
+</head>
+<body>
+    <h1>{{ bike.name }}</h1>
+    <p>Type: {{ bike.bike_type.name }}</p>
+    <p>Hourly Rate: {{ bike.hourly_rate }}</p>
+    <p>Available: {{ bike.is_available }}</p>
+    {% if bike.image %}
+        <img src="{{ bike.image.url }}" alt="{{ bike.name }}">
+    {% endif %}
+    <a href="{% url 'bike_list' %}">Back to list</a>
+</body>
+</html>

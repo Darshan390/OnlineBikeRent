@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Bike</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Create a New Bike</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Bike Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="bike_type">Bike Type</label>
+                <input type="text" class="form-control" id="bike_type" name="bike_type" required>
+            </div>
+            <div class="form-group">
+                <label for="is_available">Is Available</label>
+                <input type="checkbox" class="form-check-input" id="is_available" name="is_available">
+            </div>
+            <div class="form-group">
+                <label for="hourly_rate">Hourly Rate</label>
+                <input type="number" class="form-control" id="hourly_rate" name="hourly_rate" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control-file" id="image" name="image" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Bike</button>
+        </form>
+        <br>
+       """" <a href="{% '/bike_list' %}" class="btn btn-secondary">Back to Bike List</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/cerulean/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+          <style>
+              .card {
+                  position: relative;
+              }
+              .location {
+                  position: absolute;
+                  top: 10px;
+                  right: 10px;
+                  background: #fff;
+                  padding: 5px 10px;
+                  border-radius: 5px;
+                  font-weight: bold;
+              }
+              .price {
+                  font-size: 1.5em;
+                  color: #e74c3c;
+              }
+              .original-price {
+                  text-decoration: line-through;
+                  color: #999;
+                  font-size: 0.9em;
+              }
+              .highlight {
+                  font-size: 0.9em;
+                  color: #888;
+              }
+
+              .availability {
+            font-weight: bold;
+            color: green;
+        }
+        .unavailable {
+            font-weight: bold;
+            color: red;
+        }
+          </style>
+
+    
+   
+
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+
+  
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Home
+                  <span class="visually-hidden">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Separated link</a>
+                </div>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-sm-2" type="search" placeholder="Search">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>  
+
+
+    
+    <h1>Welcome to Rent Bike Car Application</h1>
+    <nav>
+        <ul>
+          <li><a href="{% url 'bike_type_list' %}">Bike Types</a></li>
+          <li><a href="{% url 'bike_list' %}">Bikes</a></li>
+          <li><a href="{% url 'rental_list' %}">Rentals</a></li>
+          <li><a href="{% url 'payment_list' %}">Payments</a></li>
+        </ul>
+    </nav>
+
+        <div class="container mt-5">
+            <div class="row">
+                {% for b in bikes %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ b.image.url }}" class="card-img-top" alt="{{ b.name }}">
+                        <div class="location">{{ b.location }}</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ b.name }}</h5>
+                            <p class="card-text"><small class="text-muted">{{ b.year }}</small></p>
+                            <p class="card-text">{{ b.location_details }}</p>
+                            <p class="price">Rs{{ b.hourly_rate }} <span class="original-price">Rs{{ b.hourly_rate }}</span></p>
+                            <p class="card-text">Deposit Rs{{ b.deposit }}</p>
+                            <p class="highlight">Discription : {{ b.bike_type.description  }}</p>
+                            <p class="highlight">Bike Type : {{ b.bike_type.name }} Type</p>
+                            <p class="{% if bikes.0.is_available %}availability{% else %}unavailable{% endif %}">{% if bikes.0.is_available %}Available{% else %}Unavailable{% endif %}</p>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+      
+          <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+      
+
+</body>
+</html>
